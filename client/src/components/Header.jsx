@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 
 function Header() {
   return (
-    <div className='bg-slate-400' > 
+    <div className='bg-cyan-600 text-teal-50' > 
       <div className='flex justify-between items-center max-w-6xl mx-auto p-3' >
        <Link to='/' >
        <h1 className='font-bold' >Auth App</h1>
