@@ -24,3 +24,16 @@ app.listen(port, ()=> {
 
 app.use("/backend/user", userRoutes);
 app.use("/backend/auth", authRoutes);
+
+//Middleware to handle errors
+app.use((err, req, res, next)=> {
+
+    const statusCode = err.statusCode || 500;
+    const message = err.message || 'Internal server Error';
+
+    return res.status(statusCode).json({
+        success: false,
+        message,
+        statusCode
+    })
+})
