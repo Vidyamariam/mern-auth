@@ -2,8 +2,11 @@ import { useSelector } from "react-redux"
 import { useRef, useState, useEffect } from "react";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
 import { app } from '../firebase';
-import { signOut, updateUserFailure, updateUserStart, updateUserSuccess } from "../redux/user/userSlice";
+import { deleteUserFailure, deleteUserStart, deleteUserSuccess, signOut, updateUserFailure, updateUserStart, updateUserSuccess } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
+import { deleteApp } from "firebase/app";
+
 
 function Profile() {
   const fileRef = useRef(null);
@@ -64,6 +67,60 @@ function Profile() {
     }
   }
 
+  const confirmLogout = () => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You will be logged out!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, logout!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleLogout();
+      }
+    });
+  }
+ 
+  const handleDeleteAccount= async ()=> {
+      
+      try{
+          dispatch(deleteUserStart());
+          const res = await fetch(`/backend/user/delete/${currentUser._id}`, {
+             method: 'DELETE'
+          })
+
+          const data = await res.json();
+           if(data.success === false){
+             dispatch(deleteUserFailure(data));
+             return
+           }
+           
+           dispatch(deleteUserSuccess(data));
+      }catch(error){
+        dispatch(deleteUserFailure(error));
+      }
+  }
+
+  const confirmDelete= ()=> {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You account will be deleted!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Delete!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleDeleteAccount();
+      }
+    });
+      
+  }
+
+
   const handleChange= (e)=> {
 
       setFormData({...formData, [e.target.id]: e.target.value});
@@ -120,8 +177,8 @@ function Profile() {
         <button className="bg-blue-800 p-3 text-white uppercase rounded-lg hover:opacity-80"> {loading? 'Loading...' : 'Update' } </button>
       </form>
       <div className="flex justify-between mt-3 " >
-        <span className="text-red-700 cursor-pointer" >Delete Account</span>
-        <span onClick={handleLogout} className="text-red-700 cursor-pointer" >Logout</span>
+        <span className="text-red-700 cursor-pointer" onClick={confirmDelete} >Delete Account</span>
+        <span onClick={confirmLogout} className="text-red-700 cursor-pointer" >Logout</span>
       </div>
       <p className="text-red-700 mt-4" >{error && "Something went wrong!" }</p>
       <p className="text-green-700 mt-4" >{updateSuccess && "user is updated successfully!!" }</p>
