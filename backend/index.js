@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import userRoutes from './routes/user.route.js'
 import authRoutes from './routes/auth.route.js'
+import adminRoutes from './routes/admin.route.js'
 import cookieParser from 'cookie-parser';
 
 dotenv.config();
@@ -27,6 +28,7 @@ app.listen(port, ()=> {
 
 app.use("/backend/user", userRoutes);
 app.use("/backend/auth", authRoutes);
+app.use("/backend/admin", adminRoutes);
 
 //Middleware to handle errors
 app.use((err, req, res, next)=> {

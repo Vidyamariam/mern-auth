@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { signInStart, signInSuccess, signInFailure } from '../redux/user/userSlice';
 import {useDispatch, useSelector} from "react-redux"
 import OAuth from '../components/OAuth';
+import Header from '../components/Header';
 
 function Login() {
   const [formdata, setFormData] = useState({});
@@ -85,8 +86,10 @@ function Login() {
 
 
   return (
-    <div className='p-4 max-w-lg mx-auto' >
-      <h1 className=' text-3xl font-bold text-center my-5' >Login</h1>
+    <div  >
+      <Header/>
+       <div className='p-4 max-w-lg mx-auto' >
+       <h1 className=' text-3xl font-bold text-center my-5' >Login</h1>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4' >
       <input type='email' placeholder='Enter email' id='email' className='bg-slate-300 p-3 rounded-lg' onChange={handleChanges} ></input>
       {emailError && <p className='text-red-700' >{emailError}</p>}
@@ -104,6 +107,8 @@ function Login() {
           
        </div>
        <span className='text-red-700 mt-3' >{error ? error.message || 'Something went wrong!' : ''}</span>
+       </div>
+      
     </div>
   )
 }

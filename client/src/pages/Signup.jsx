@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link , useNavigate } from 'react-router-dom';
 import OAuth from '../components/OAuth';
+import Header from '../components/Header';
 
 
 function Signup() {
@@ -94,8 +95,10 @@ function Signup() {
   }
 
   return (
-    <div className='p-3 max-w-lg mx-auto'>
-      <h1 className='text-3xl text-center font-semibold my-5' >Signup</h1>
+    <div>
+      <Header/>
+       <div className='p-3 max-w-lg mx-auto' >
+       <h1 className='text-3xl text-center font-semibold my-5' >Signup</h1>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4' >
         <input type='text' placeholder='Enter username' id='username' className='bg-slate-300 p-3 rounded-lg' onChange={handleChanges} ></input>
          {usernameError && <p className='text-red-700' >{usernameError}</p>}
@@ -116,6 +119,9 @@ function Signup() {
 
       </div>
         <span className='text-red-700 mt-3' >{error && 'Something went wrong!'}</span>
+
+       </div>
+     
     </div>
   )
 }
