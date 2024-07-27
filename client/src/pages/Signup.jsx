@@ -119,7 +119,7 @@ function Signup() {
 
       </div>
         <span className='text-red-700 mt-3' >{error && 'Something went wrong!'}</span>
-
+         
        </div>
      
     </div>

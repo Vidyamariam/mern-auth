@@ -1,11 +1,15 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import userReducer from './user/userSlice.js';
+import adminRducer from './user/adminSlice.js';
 import {persistReducer} from 'redux-persist';
 import storage from "redux-persist/lib/storage";
 import persistStore from "redux-persist/es/persistStore";
 
 //react-persist- 
-const rootReducer = combineReducers({user: userReducer});
+const rootReducer = combineReducers({
+    user: userReducer,
+    admin: adminRducer, // Add the admin reducer
+});
 
 const persistConfig = {
     key: 'root',

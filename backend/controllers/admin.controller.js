@@ -24,10 +24,7 @@ export const login= async (req,res,next)=> {
             
             await newAdmin.save();
             console.log('Initial admin account created.');
-        } else {
-            console.log('Admin account already exists.');
-        }
-
+        } 
       
         const adminDetails = await Admin.findOne({ email: adminData.email });
         
@@ -87,4 +84,10 @@ export const createUser= async (req,res,next)=> {
 
         next(error);
        }
+}
+
+export const editUser = (req,res, next)=> {
+    
+     
+     
 }
